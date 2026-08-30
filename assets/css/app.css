@@ -44,6 +44,7 @@ input[type="checkbox"],input[type="radio"]{width:24px;height:24px;min-width:24px
 .muted{color:var(--muted)}.small{font-size:13px}.badge{display:inline-flex;align-items:center;padding:5px 9px;border-radius:999px;font-weight:750;font-size:12px;background:#eef2f7;color:#172033}.stats{font-size:34px;font-weight:850;line-height:1.1}
 .table-wrap{overflow:auto;-webkit-overflow-scrolling:touch}.table{width:100%;border-collapse:collapse}.table th,.table td{text-align:left;padding:11px 10px;border-bottom:1px solid #e5e7eb;white-space:nowrap}.table th{font-size:13px;color:var(--muted)}
 .map{height:520px;border-radius:16px;overflow:hidden;border:1px solid var(--border)}.photo-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px}.photo-grid img{width:100%;height:160px;object-fit:cover;border-radius:12px;background:#e5e7eb}
+.pagination{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:16px}.pagination-status{color:var(--muted);font-size:13px;text-align:center}.pagination .btn.disabled{opacity:.45;pointer-events:none}
 .footer{padding:40px 0;color:var(--muted)}.section{padding:24px 0}.case-id{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-weight:800;overflow-wrap:anywhere}.privacy{display:flex;align-items:flex-start;gap:10px;padding:6px 0}.privacy span{padding-top:1px}.hide-human img{filter:blur(18px)}
 
 /* location reporting */
@@ -107,3 +108,35 @@ input[type="checkbox"],input[type="radio"]{width:24px;height:24px;min-width:24px
 @media(prefers-contrast:more){:root{--border:#62748a}.input,.select,.textarea{border-width:2px}.btn{border-color:currentColor}}
 @media(forced-colors:active){.btn,.card,.warning,.info,.success,.danger,.milestone{forced-color-adjust:auto;border:1px solid CanvasText}.gps-dot{forced-color-adjust:auto}}
 @media print{body{padding:0;background:#fff}.no-print,.topbar,.sidebar,.mobile-bottom-nav,.a11y-fab,.a11y-panel,.admin-mobile-top,.mobile-submit-bar{display:none!important}.admin-shell{display:block}.card{box-shadow:none;border:1px solid #bbb}.admin-main{padding:0}.photo-grid img{filter:none!important}}
+
+.report-doc{max-width:900px;margin:0 auto;font-size:13px;line-height:1.42;color:#171c26}
+.report-topbar{display:flex;justify-content:flex-end;gap:8px;margin-bottom:14px}
+.report-head{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;border-bottom:3px solid var(--navy);padding-bottom:10px;margin-bottom:10px}
+.report-org{font-size:11px;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);font-weight:750}
+.report-head h1{margin:2px 0 0;font-size:22px;line-height:1.1}
+.report-idbox{text-align:right;flex:0 0 auto}
+.report-id{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-weight:800;font-size:16px}
+.report-meta-line{font-size:11px;color:var(--muted)}
+.report-badges{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+.rb{background:#eef2f7;border-radius:999px;padding:4px 11px;font-size:11px;font-weight:750;color:#334155}
+.rb-status{background:var(--navy);color:#fff}
+.report-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 24px;margin-bottom:12px}
+.report-flex{display:flex;flex-wrap:wrap;gap:0 24px;margin-bottom:12px}
+.report-flex>.report-col{flex:1 1 280px;min-width:0}
+.report-col-photos{flex:1.4 1 360px}
+.report-col,.report-block{break-inside:avoid}
+.report-col h2,.report-block h2{font-size:11.5px;text-transform:uppercase;letter-spacing:.05em;color:var(--navy);border-bottom:1px solid var(--border);padding-bottom:4px;margin:0 0 8px}
+.report-block{margin-bottom:12px}
+.report-block p{margin:0;white-space:pre-line}
+.rf{display:flex;gap:6px;margin-bottom:3px;break-inside:avoid}
+.rl{flex:0 0 128px;color:var(--muted);font-weight:650}
+.rv{flex:1;word-break:break-word}
+.report-photos{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px}
+.report-photos img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:10px;border:1px solid var(--border)}
+.report-footer{margin-top:14px;padding-top:8px;border-top:1px solid var(--border);font-size:10px;color:var(--muted);text-align:center}
+@media print{
+  @page{size:A4;margin:12mm}
+  .report-doc{font-size:11.5px}
+  .report-head h1{font-size:19px}
+  .rl{flex-basis:118px}
+}

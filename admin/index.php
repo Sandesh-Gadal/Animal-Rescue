@@ -1,6 +1,6 @@
 <?php
 require dirname(__DIR__).'/includes/bootstrap.php';require_admin();
-$title='Dashboard';$useLeaflet=true;
+$title='Dashboard';
 $type=$_GET['type']??'';$status=$_GET['status']??'';$q=trim((string)($_GET['q']??''));$police=$_GET['police']??'';
 $dateFrom=(string)($_GET['date_from']??'');$dateTo=(string)($_GET['date_to']??'');
 if($dateFrom!=='' && !preg_match('/^\d{4}-\d{2}-\d{2}$/',$dateFrom)) $dateFrom='';
@@ -12,14 +12,22 @@ if($police==='pending'){$where[]="body_type='human' AND police_informed=0";}
 if($q!==''){$where[]='(public_id LIKE ? OR reporter_name LIKE ? OR reporter_phone LIKE ? OR location_text LIKE ? OR police_unit LIKE ? OR rescue_team_name LIKE ?)';for($i=0;$i<6;$i++)$params[]='%'.$q.'%';}
 if($dateFrom!==''){$where[]='created_at >= ?';$params[]=$dateFrom.' 00:00:00';}
 if($dateTo!==''){$where[]='created_at <= ?';$params[]=$dateTo.' 23:59:59';}
-$sql='SELECT * FROM body_reports'.($where?' WHERE '.implode(' AND ',$where):'').' ORDER BY created_at DESC LIMIT 500';
+$perPage=10;
+$countStmt=$db->prepare('SELECT COUNT(*) FROM body_reports'.($where?' WHERE '.implode(' AND ',$where):''));
+$countStmt->execute($params);
+$totalRows=(int)$countStmt->fetchColumn();
+$totalPages=max(1,(int)ceil($totalRows/$perPage));
+$page=max(1,min($totalPages,(int)($_GET['page']??1)));
+$offset=($page-1)*$perPage;
+$sql='SELECT * FROM body_reports'.($where?' WHERE '.implode(' AND ',$where):'').' ORDER BY created_at DESC LIMIT '.$perPage.' OFFSET '.$offset;
 $s=$db->prepare($sql);$s->execute($params);$rows=$s->fetchAll();
 $stats=$db->query("SELECT COUNT(*) total,SUM(status='new') new_count,SUM(body_type='human') humans,SUM(body_type='human' AND police_informed=0 AND status NOT IN ('closed','false_report','invalid','duplicate')) police_pending,SUM(team_dispatched_at IS NOT NULL AND recovered_at IS NULL) dispatched,SUM(recovered_at IS NOT NULL) recovered,SUM(closed_at IS NOT NULL) closed_count FROM body_reports")->fetch();
-$mapPoints=array_map(fn($r)=>['id'=>$r['public_id'],'lat'=>(float)$r['latitude'],'lng'=>(float)$r['longitude'],'type'=>$r['body_type'],'status'=>$r['status']],$rows);
 $filtered=(bool)$where;
-$exportQuery=http_build_query(['type'=>$type,'status'=>$status,'police'=>$police,'q'=>$q,'date_from'=>$dateFrom,'date_to'=>$dateTo]);
+$filterParams=['type'=>$type,'status'=>$status,'police'=>$police,'q'=>$q,'date_from'=>$dateFrom,'date_to'=>$dateTo];
+$exportQuery=http_build_query($filterParams);
 require dirname(__DIR__).'/includes/admin_header.php';
 $base=app_base($config);
+$pageQuery=fn(int $p)=>$base.'/admin?'.http_build_query($filterParams+['page'=>$p]);
 ?>
 <h1>Operations Dashboard</h1>
 <div class="dashboard-stats" aria-label="Case statistics">
@@ -67,12 +75,17 @@ $base=app_base($config);
 <?php endforeach;?>
 </div>
 
-<div class="card" style="margin-top:18px"><h2 style="margin-top:0">Case Map</h2><div id="map" class="map" style="height:390px"></div></div>
-
 <div class="card desktop-case-table" style="margin-top:18px"><div class="table-wrap"><table class="table"><thead><tr><th>Case</th><th>Type</th><th>Status</th><th>Next action</th><th>Action</th></tr></thead><tbody><?php foreach($rows as $r):?><tr><td><a class="case-id" href="<?=$base?>/admin/case.php?id=<?=rawurlencode($r['public_id'])?>"><?=e($r['public_id'])?></a></td><td><?=e($r['body_type'])?></td><td><?=e(status_labels()[$r['status']]??$r['status'])?></td><td><strong><?=e(workflow_next_label($r))?></strong></td><td class="table-actions">
 <a class="btn icon-btn" href="<?=$base?>/admin/case.php?id=<?=rawurlencode($r['public_id'])?>" title="View" aria-label="View case"><?=icon_view()?></a>
 <?php if(can_edit()):?><a class="btn btn-green icon-btn" href="<?=$base?>/admin/case.php?id=<?=rawurlencode($r['public_id'])?>#case-details" title="Edit" aria-label="Edit case"><?=icon_edit()?></a><?php endif;?>
 <?php if(can_close() && !is_terminal_status((string)$r['status'])):?><a class="btn btn-primary icon-btn" href="<?=$base?>/admin/case.php?id=<?=rawurlencode($r['public_id'])?>#fake-report-section" title="Close as false/invalid" aria-label="Close case as false/invalid"><?=icon_delete()?></a><?php endif;?>
 </td></tr><?php endforeach;?></tbody></table></div></div>
-<script>document.addEventListener('DOMContentLoaded',()=>{const pts=<?=json_encode($mapPoints)?>;const m=L.map('map').setView(pts.length?[pts[0].lat,pts[0].lng]:[28.3949,84.124],7);L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'© OpenStreetMap'}).addTo(m);const b=[];pts.forEach(p=>{L.marker([p.lat,p.lng],{title:p.id}).addTo(m).bindPopup(`<b>${p.id}</b><br>${p.type} · ${p.status}<br><a href="<?=e(app_base($config))?>/admin/case.php?id=${encodeURIComponent(p.id)}">Open case</a>`);b.push([p.lat,p.lng]);});if(b.length>1)m.fitBounds(b,{padding:[20,20]});});</script>
+
+<?php if($totalPages>1):?>
+<nav class="pagination" aria-label="Case list pages">
+  <a class="btn icon-btn<?=$page<=1?' disabled':''?>" href="<?=e($pageQuery(max(1,$page-1)))?>" aria-label="Previous page"<?=$page<=1?' aria-disabled="true" tabindex="-1"':''?>>‹ Prev</a>
+  <span class="pagination-status">Page <?=$page?> of <?=$totalPages?> · <?=$totalRows?> case<?=$totalRows===1?'':'s'?></span>
+  <a class="btn icon-btn<?=$page>=$totalPages?' disabled':''?>" href="<?=e($pageQuery(min($totalPages,$page+1)))?>" aria-label="Next page"<?=$page>=$totalPages?' aria-disabled="true" tabindex="-1"':''?>>Next ›</a>
+</nav>
+<?php endif;?>
 <?php require dirname(__DIR__).'/includes/admin_footer.php'; ?>
