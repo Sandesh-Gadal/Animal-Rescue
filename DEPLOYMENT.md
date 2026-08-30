@@ -13,18 +13,17 @@ Server deployment steps for the Dead Body Mapping System. This is a plain PHP ap
 ## 2. Fresh installation
 
 1. **Upload the application files** to the web root (e.g. `/public_html/db/`).
-2. **Create the database and a dedicated database user**, and grant that user full privileges on the database only (not global).
-3. **Import the schema**: run `database.sql` against the new database (via phpMyAdmin, `mysql` CLI, or your host's DB tool). This creates all tables already at the current schema version — no migration is needed on a fresh install.
-4. **Create `config.php`**: copy `config.example.php` to `config.php` and fill in:
+2. **Create the database and a dedicated database user**, and grant that user full privileges on the database only (not global). Do **not** import `database.sql` manually — `setup.php` (step 4) does this for you.
+3. **Create `config.php`**: copy `config.example.php` to `config.php` and fill in:
    - `db.host` / `db.name` / `db.user` / `db.pass` — your real database credentials
    - `base_url` — your site URL (e.g. `https://example.com/db`), or leave blank to auto-detect from the request
-   - `security.setup_key` — replace the placeholder with a long random secret (used once, to gate first-admin creation)
+   - `security.setup_key` — replace the placeholder with a long random secret (used once, to gate the install/first-admin step below)
    - `security.session_name`, `max_upload_mb`, `max_photos`, `public_coordinate_decimals` — defaults are usually fine
+4. **Run the installer**: visit `/setup.php?key=YOUR_SETUP_KEY` (the key from `config.php` → `security.setup_key`). This creates the full database schema (all tables, at the current schema version) and lets you create the first Admin account in one step. It refuses to run if an admin already exists or the setup key is wrong/still the placeholder, and it's safe to reload if something fails partway (e.g. a DB privilege issue) — just fix the issue and try again.
 5. **Set `uploads/` permissions** so the web server user can write to it (typically `755` on the directory is enough if the web server owns it; use `775`/appropriate group ownership if it doesn't). Confirm `uploads/.htaccess` (blocks PHP execution inside uploads) made it onto the server — it's a real security control, not optional.
-6. **Create the first Admin account**: visit `/setup/create_admin.php?key=YOUR_SETUP_KEY` (the key from `config.php` → `security.setup_key`) and fill in the form.
-7. **Delete `/setup/`** from the server immediately after the admin account is created. It's a one-time bootstrap tool with no further purpose, and leaving it live is a needless attack surface.
-8. **Create at least one Operator account** via `/admin/users.php` (logged in as the admin you just created) — reports can only be filed by logged-in Admin/Operator accounts; there is no public self-registration.
-9. **Verify HTTPS is enforced** (redirect HTTP → HTTPS at the server/vhost level; the app does not do this itself).
+6. **Delete `setup.php`** (and the `/setup/` folder, a legacy single-purpose admin-creation tool now superseded by `setup.php`) from the server immediately after the admin account is created. They have no further purpose, and leaving them live is a needless attack surface.
+7. **Create at least one Operator account** via `/admin/users.php` (logged in as the admin you just created) — reports can only be filed by logged-in Admin/Operator accounts; there is no public self-registration.
+8. **Verify HTTPS is enforced** (redirect HTTP → HTTPS at the server/vhost level; the app does not do this itself).
 
 ## 3. Post-deploy verification checklist
 
