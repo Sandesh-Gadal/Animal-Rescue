@@ -1,6 +1,6 @@
 <?php
 require __DIR__.'/includes/bootstrap.php';
-$title='Dead Body Reporting';
+$title='Livestock Carcass Management';
 $useLeaflet=true;
 $simpleNav=true;
 $stats=$db->query("SELECT COUNT(*) total, SUM(status IN ('new','verification_required')) pending, SUM(status IN ('confirmed','police_informed','team_dispatched')) in_progress, SUM(status IN ('recovered','shifted','buried','identified','closed')) rescued FROM body_reports")->fetch();
@@ -11,7 +11,7 @@ require __DIR__.'/includes/public_header.php';
 ?>
 <section class="hero"><div class="container">
 <div class="badge">Public safety dashboard</div>
-<h1>Dead Body Reporting / मृत शरीर प्रतिवेदन</h1>
+<h1>Livestock Carcass Management / पशु चौपाया शव व्यवस्थापन</h1>
 <p>Current case counts across all human and animal reports.</p>
 <?php if (is_admin_logged_in() && can_edit()): ?>
 <div style="margin-top:14px"><a class="btn btn-primary" href="<?=app_base($config)?>/report">Report the Case / घटना पठाउनुहोस्</a></div>

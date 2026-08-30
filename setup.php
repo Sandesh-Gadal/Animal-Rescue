@@ -67,7 +67,7 @@ if (!file_exists($configPath)) {
         if (!requirements_pass($requirements)) {
             $err = 'Fix the missing requirements above before continuing.';
         } else {
-            $appName = trim((string)($_POST['app_name'] ?? 'Dead Body Mapping System')) ?: 'Dead Body Mapping System';
+            $appName = trim((string)($_POST['app_name'] ?? 'Livestock Carcass Management System')) ?: 'Livestock Carcass Management System';
             $baseUrl = rtrim(trim((string)($_POST['base_url'] ?? '')), '/');
             $timezone = trim((string)($_POST['timezone'] ?? 'Asia/Kathmandu')) ?: 'Asia/Kathmandu';
             $host = trim((string)($_POST['db_host'] ?? 'localhost'));
@@ -134,14 +134,14 @@ if (!file_exists($configPath)) {
     }
 
     $body = '<div class="card">'
-        .'<h1>Dead Body Mapping System — Setup</h1>'
+        .'<h1>Livestock Carcass Management System — Setup</h1>'
         .'<p class="small">Step 1 of 3: database connection.</p>'
         .render_requirements($requirements)
         .'<div class="warning">This page is not yet protected by a setup key (none exists until config.php is written). Run it immediately after uploading the files, before anyone else can reach this URL, and delete <code>setup.php</code> as soon as setup finishes.</div>'
         .($err ? '<div class="danger" style="margin-top:16px">'.e($err).'</div>' : '')
         .'<form method="post" style="margin-top:16px">'
         .'<input type="hidden" name="csrf" value="'.e(csrf_token()).'">'
-        .'<div class="form-group"><label>Application name</label><input class="input" name="app_name" value="'.e((string)($_POST['app_name'] ?? 'Dead Body Mapping System')).'"></div>'
+        .'<div class="form-group"><label>Application name</label><input class="input" name="app_name" value="'.e((string)($_POST['app_name'] ?? 'Livestock Carcass Management System')).'"></div>'
         .'<div class="form-group"><label>Base URL (optional, e.g. https://example.com/db)</label><input class="input" name="base_url" value="'.e((string)($_POST['base_url'] ?? '')).'"></div>'
         .'<div class="form-group"><label>Timezone</label><input class="input" name="timezone" value="'.e((string)($_POST['timezone'] ?? 'Asia/Kathmandu')).'"></div>'
         .'<div class="grid grid-2">'

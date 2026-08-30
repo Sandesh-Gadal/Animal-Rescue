@@ -2,7 +2,7 @@
 declare(strict_types=1);
 
 return [
-    'app_name' => 'Dead Body Mapping System',
+    'app_name' => 'Livestock Carcass Management System',
     'base_url' => '', // e.g. https://example.com ; leave blank for auto-detection
     'timezone' => 'Asia/Kathmandu',
     'db' => [

@@ -22,7 +22,7 @@ $base=app_base($config);
 <header class="topbar">
   <div class="container row">
     <?php if (empty($simpleNav)): ?><button id="public-menu-toggle" class="btn public-menu-btn no-print" type="button" aria-label="Open menu" aria-controls="public-nav" aria-expanded="false" onclick="togglePublicMenu()">☰</button><?php endif; ?>
-    <a class="brand" href="<?=$base?>/" aria-label="Home">Dead Body Reporting</a>
+    <a class="brand" href="<?=$base?>/" aria-label="Home">Livestock Carcass Management</a>
     <?php if (empty($simpleNav)): ?><div id="public-menu-backdrop" class="public-menu-backdrop no-print" hidden onclick="togglePublicMenu(false)"></div><?php endif; ?>
     <nav class="nav<?=!empty($simpleNav) ? ' nav-simple' : ''?>" id="public-nav" aria-label="Main navigation">
       <?php if (empty($simpleNav)): ?><button class="public-menu-close" type="button" aria-label="Close menu" onclick="togglePublicMenu(false)">×</button><?php endif; ?>
