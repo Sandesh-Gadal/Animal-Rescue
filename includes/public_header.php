@@ -21,17 +21,17 @@ $base=app_base($config);
 <?php if (empty($hideTopbar)): ?>
 <header class="topbar">
   <div class="container row">
-    <button id="public-menu-toggle" class="btn public-menu-btn no-print" type="button" aria-label="Open menu" aria-controls="public-nav" aria-expanded="false" onclick="togglePublicMenu()">☰</button>
+    <?php if (empty($simpleNav)): ?><button id="public-menu-toggle" class="btn public-menu-btn no-print" type="button" aria-label="Open menu" aria-controls="public-nav" aria-expanded="false" onclick="togglePublicMenu()">☰</button><?php endif; ?>
     <a class="brand" href="<?=$base?>/" aria-label="Home">Dead Body Reporting</a>
-    <div id="public-menu-backdrop" class="public-menu-backdrop no-print" hidden onclick="togglePublicMenu(false)"></div>
-    <nav class="nav" id="public-nav" aria-label="Main navigation">
-      <button class="public-menu-close" type="button" aria-label="Close menu" onclick="togglePublicMenu(false)">×</button>
-      <a href="<?=$base?>/">Home / गृहपृष्ठ</a>
-      <?php if (is_admin_logged_in() && can_edit()): ?><a href="<?=$base?>/report">Report / सूचना</a><?php endif; ?>
+    <?php if (empty($simpleNav)): ?><div id="public-menu-backdrop" class="public-menu-backdrop no-print" hidden onclick="togglePublicMenu(false)"></div><?php endif; ?>
+    <nav class="nav<?=!empty($simpleNav) ? ' nav-simple' : ''?>" id="public-nav" aria-label="Main navigation">
+      <?php if (empty($simpleNav)): ?><button class="public-menu-close" type="button" aria-label="Close menu" onclick="togglePublicMenu(false)">×</button><?php endif; ?>
+      <a class="<?=!empty($simpleNav) ? 'btn' : ''?>" href="<?=$base?>/">Home / गृहपृष्ठ</a>
+      <?php if (is_admin_logged_in() && can_edit()): ?><a class="<?=!empty($simpleNav) ? 'btn' : ''?>" href="<?=$base?>/report">Report / सूचना</a><?php endif; ?>
       <?php if (is_admin_logged_in()): ?>
-      <a href="<?=$base?>/admin">Dashboard</a>
+      <a class="<?=!empty($simpleNav) ? 'btn btn-primary' : ''?>" href="<?=$base?>/admin">Dashboard</a>
       <?php else: ?>
-      <a href="<?=$base?>/admin/login.php">Login / लगइन</a>
+      <a class="<?=!empty($simpleNav) ? 'btn btn-primary' : ''?>" href="<?=$base?>/admin/login.php">Login / लगइन</a>
       <?php endif; ?>
     </nav>
   </div>

@@ -27,6 +27,7 @@ img{max-width:100%}
 .brand{font-weight:850;color:#fff;line-height:1.2}.brand:hover{text-decoration:none}
 .public-menu-btn,.public-menu-close,.public-menu-backdrop{display:none}
 .nav{display:flex;gap:8px;flex-wrap:wrap}.nav a{color:#e5edf8;min-height:44px;display:inline-flex;align-items:center;padding:6px 9px;border-radius:9px}.nav a:hover{background:rgba(255,255,255,.09);text-decoration:none}
+.nav-simple a.btn{color:#000}.nav-simple a.btn-primary{color:#fff}.nav-simple a.btn:hover{background:#e9eef6;filter:brightness(.96)}
 .hero{padding:48px 0 28px}.hero h1{font-size:clamp(32px,5vw,58px);line-height:1.04;margin:0 0 14px}.hero p{font-size:18px;color:#536078;max-width:750px}
 .grid{display:grid;gap:18px}.grid-2{grid-template-columns:repeat(2,minmax(0,1fr))}.grid-3{grid-template-columns:repeat(3,minmax(0,1fr))}
 .card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow)}
@@ -74,6 +75,7 @@ input[type="checkbox"],input[type="radio"]{width:24px;height:24px;min-width:24px
   .container{width:min(100% - 22px,var(--content))}
   .grid-2,.grid-3{grid-template-columns:1fr}.mobile-only{display:block}.desktop-only{display:none!important}
   .topbar{padding:9px 0;padding-top:calc(9px + var(--safe-top))}.brand{font-size:15px}.topbar .nav{display:none}
+  .topbar .nav.nav-simple{display:flex!important;gap:6px;flex:none}.nav-simple .btn{width:auto;min-height:38px;padding:8px 12px;font-size:13px;white-space:nowrap}
   .public-menu-btn{display:flex!important;width:44px;min-height:44px;flex:none;padding:0;font-size:22px;line-height:1;border:0;background:rgba(255,255,255,.14)!important;color:#fff!important;border-radius:10px}
   .public-menu-backdrop{display:block;position:fixed;inset:0;background:rgba(15,23,42,.55);z-index:2390}.public-menu-backdrop[hidden]{display:none}
   .nav.mobile-open{display:flex!important;flex-direction:column;position:fixed;top:0;left:0;bottom:0;width:82%;max-width:300px;z-index:2400;background:var(--navy);padding:22px;padding-top:calc(22px + var(--safe-top));box-shadow:0 20px 60px rgba(0,0,0,.35);gap:4px}

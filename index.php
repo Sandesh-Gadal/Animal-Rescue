@@ -2,7 +2,7 @@
 require __DIR__.'/includes/bootstrap.php';
 $title='Dead Body Reporting';
 $useLeaflet=true;
-$hideTopbar=true;
+$simpleNav=true;
 $stats=$db->query("SELECT COUNT(*) total, SUM(status IN ('new','verification_required')) pending, SUM(status IN ('confirmed','police_informed','team_dispatched')) in_progress, SUM(status IN ('recovered','shifted','buried','identified','closed')) rescued FROM body_reports")->fetch();
 $rows=$db->query("SELECT public_id,body_type,status,latitude,longitude,location_text,created_at FROM body_reports WHERE status NOT IN ('false_report','invalid','duplicate','unable_to_locate') ORDER BY created_at DESC LIMIT 1000")->fetchAll();
 $points=[];
