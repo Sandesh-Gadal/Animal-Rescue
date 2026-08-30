@@ -1,0 +1,28 @@
+Dead Body Mapping System v1.3 - Guided Case Workflow
+
+WHAT CHANGED
+- Dashboard now has an explicit "Update Case" button for every report.
+- Dashboard shows the next required operational action.
+- Case page shows a large NEXT REQUIRED ACTION card.
+- Human workflow:
+  Confirm -> Inform Nepal Police -> Dispatch Response Team -> Recovered -> Handover/Mortuary -> Close.
+- Animal workflow:
+  Confirm -> Send Rescue/Recovery Team -> Recovered -> Buried/Disposed -> Close.
+- Fake/false reports can be marked "Fake & Close" with a mandatory verification reason.
+- Required workflow steps cannot be skipped through the guided buttons.
+- Existing advanced edit form remains available for correcting original data and exceptional manual updates.
+- Public case tracking now follows the correct Human/Animal workflow.
+
+UPGRADE FROM v1.2
+No database migration is required.
+Upload/overwrite these files:
+  admin/case.php
+  admin/index.php
+  case.php
+  includes/functions.php
+  assets/css/app.css
+
+Then reload /db/admin. Browser cache-busting already used by the app will load the changed stylesheet.
+
+IMPORTANT
+Recording "Nepal Police informed" does not itself send an SMS/message to Nepal Police. It records the operational event. Use the existing Share Exact Location feature to generate a protected GPS link and send it to the police/rescue contact through your available communication channel.

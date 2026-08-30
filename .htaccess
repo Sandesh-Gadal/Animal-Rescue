@@ -1,0 +1,31 @@
+Options -Indexes
+RewriteEngine On
+
+# Protect internal/config files
+<FilesMatch "^(config\.php|config\.example\.php|database\.sql|README\.md|\.env)$">
+    Require all denied
+</FilesMatch>
+
+# Block direct access to internal files
+RewriteRule ^includes/ - [F,L]
+RewriteRule ^migrations/ - [F,L]
+
+# Friendly public routes
+RewriteRule ^report/?$ report.php [L,QSA]
+RewriteRule ^submit/?$ submit.php [L,QSA]
+RewriteRule ^map/?$ / [R=301,L]
+RewriteRule ^case/([A-Za-z0-9-]+)/?$ case.php?id=$1 [L,QSA]
+RewriteRule ^success/([A-Za-z0-9-]+)/?$ success.php?id=$1 [L,QSA]
+RewriteRule ^share/([A-Za-z0-9_-]+)/?$ share_case.php?token=$1 [L,QSA]
+
+# Friendly admin routes
+RewriteRule ^admin/?$ admin/index.php [L,QSA]
+RewriteRule ^admin/login/?$ admin/login.php [L,QSA]
+RewriteRule ^admin/logout/?$ admin/logout.php [L,QSA]
+RewriteRule ^admin/case/([A-Za-z0-9-]+)/?$ admin/case.php?id=$1 [L,QSA]
+RewriteRule ^admin/share/([A-Za-z0-9-]+)/?$ admin/share.php?id=$1 [L,QSA]
+RewriteRule ^admin/export/([A-Za-z]+)/?$ admin/export.php?format=$1 [L,QSA]
+RewriteRule ^admin/report/([A-Za-z0-9-]+)/?$ admin/print_case.php?id=$1 [L,QSA]
+
+# Prevent PHP execution inside uploads
+RewriteRule ^uploads/.*\.php$ - [F,L]

@@ -1,0 +1,26 @@
+# Local configuration — contains real database credentials and secrets.
+# Deploy from config.example.php instead; never commit the real config.php.
+config.php
+
+# User-uploaded evidence photos — not source code, and may be sensitive.
+/uploads/*
+!/uploads/.gitkeep
+!/uploads/.htaccess
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor/IDE
+.vscode/
+.idea/
+*.swp
+
+# Logs
+*.log
+
+# Local Docker overrides
+docker-compose.override.yml
+
+# Local-only Docker dev setup (production deploys via traditional PHP hosting, not Docker)
+docker/Dockerfile

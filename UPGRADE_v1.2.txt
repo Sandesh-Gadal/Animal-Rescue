@@ -1,0 +1,46 @@
+DEAD BODY MAPPING SYSTEM v1.2 — UPGRADE FROM v1.0/v1.1
+========================================================
+Target URL: https://www.labhexa.com/db
+
+IMPORTANT ORDER
+1. Back up the existing labhexac_db database and /public_html/db files.
+2. Upload/overwrite the v1.2 files into /public_html/db/.
+3. BEFORE using the dashboard, run the database migration:
+   https://www.labhexa.com/db/migrate_v1_2.php?key=YOUR_SETUP_KEY
+   Copy YOUR_SETUP_KEY from config.php -> security -> setup_key.
+4. When the page says migration complete, DELETE migrate_v1_2.php from the server.
+5. Open https://www.labhexa.com/db/admin and test an existing case.
+
+Alternative migration:
+Import migrations/v1.2_case_tracking.sql using phpMyAdmin instead of using migrate_v1_2.php.
+
+LOCATION BEHAVIOUR
+- Exact browser GPS requires browser/device permission. This cannot be bypassed by a website.
+- If permission was already granted, the report page fetches location automatically.
+- If permission is undecided, a one-tap in-app screen triggers the browser permission prompt.
+- If permission is denied, the user gets instructions to enable it and can choose a point on the map.
+- Manual/map coordinates are explicitly stored with their source; GPS reports retain accuracy in metres.
+
+NEW CASE WORKFLOW
+New Report -> Verification Required -> Confirmed -> Nepal Police Informed -> Team Dispatched -> Recovered/Rescued -> Shifted / Buried -> Identified -> Closed
+Terminal alternatives: False Report / Invalid / Duplicate / Unable to Locate.
+
+NEW OPERATIONAL DATA
+- Confirmation timestamp
+- Nepal Police informed flag/time/unit/contact/reference
+- Exact-GPS shared-to-police timestamp
+- Rescue/recovery team name/contact/dispatch time
+- Exact-GPS shared-to-team timestamp
+- Recovery details
+- Burial/final-handling time, location, GPS, responsible party and notes
+- Closure reason and false-report/correction details
+- Full status history and audit log
+
+SECURE LOCATION SHARING
+From an admin case, use “Share Exact Location”. Create an expiring link for Nepal Police, a rescue team or another authorized recipient. The link contains the exact GPS and navigation map but not reporter contact or restricted body photos. Links can expire or be revoked and access counts are stored.
+
+SECURITY
+- Do not post secure human-case location links publicly.
+- Delete migrate_v1_2.php immediately after upgrade.
+- Keep config.php and database credentials private.
+- Use HTTPS.

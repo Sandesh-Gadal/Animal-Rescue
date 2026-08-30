@@ -1,0 +1,41 @@
+DEAD BODY MAPPING SYSTEM v1.6 — UPGRADE FROM v1.2/v1.3/v1.5
+=============================================================
+
+IMPORTANT ORDER
+1. Back up the existing database and site files.
+2. Upload/overwrite the v1.6 files into the site directory.
+3. BEFORE using the dashboard, run the database migration:
+   https://YOUR_SITE/db/migrate_v1_6.php?key=YOUR_SETUP_KEY
+   Copy YOUR_SETUP_KEY from config.php -> security -> setup_key.
+4. When the page says migration complete, DELETE migrate_v1_6.php from the server.
+5. Open /admin and test an existing case; confirm an Operator account can reach /report.
+
+Alternative migration:
+Import migrations/v1.6_animal_carcass_fields.sql using phpMyAdmin instead of using migrate_v1_6.php.
+Note: unlike migrate_v1_6.php, the raw SQL file is NOT safe to re-run — it will fail with a
+duplicate-column error on a second run. Only run it once.
+
+WHAT'S NEW
+
+Animal Carcass Assessment fields
+- The report form now collects, for Animal reports: date/time observed, weather
+  conditions, species, estimated size, number of carcasses, decomposition state, distance
+  from water source, distance from human settlement, proposed disposal method, equipment
+  needed and disinfection materials needed.
+- These fields are also visible and editable from the admin case view (Advanced Edit ->
+  Animal Carcass Details), and included in CSV/JSON exports and printed case reports.
+
+Report filing is now staff-only (BREAKING CHANGE for existing deployments)
+- The public can no longer file a report anonymously. /report and /submit now require a
+  logged-in Admin or Operator account (Viewer accounts cannot file reports).
+- Staff log in at /admin/login.php with their existing admin_users username/password —
+  there is no separate reporter account system.
+- Each report now records which staff account filed it (body_reports.submitted_by),
+  shown on the case view as "Filed by".
+- The public homepage (/) shows only aggregate case counts (Pending / In progress /
+  Rescued) — no public reporting form or case-tracking form.
+
+SECURITY
+- Delete migrate_v1_6.php immediately after upgrade.
+- Keep config.php and database credentials private.
+- Use HTTPS.

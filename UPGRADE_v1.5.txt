@@ -1,0 +1,26 @@
+Dead Body Mapping System v1.5 Mobile Accessibility Upgrade
+==========================================================
+
+NO DATABASE MIGRATION IS REQUIRED.
+
+Existing LabHexa deployment:
+1. Back up /public_html/db/ and the database.
+2. Upload DeadBody_v1.5_Mobile_Accessibility_Patch.zip into /public_html/db/.
+3. Extract and choose Replace / Overwrite existing files.
+4. DO NOT delete or overwrite your live config.php.
+5. Open https://www.labhexa.com/db/ and https://www.labhexa.com/db/admin.
+6. Hard refresh once if your browser still has an older interface.
+
+Expected visible changes:
+- Mobile public bottom navigation
+- Accessibility button (wheelchair icon)
+- Report form steps and sticky mobile submit
+- Photo previews
+- Mobile admin case cards
+- Mobile admin bottom navigation
+- Advanced Edit collapsed by default
+- One-tap phone call buttons where contact numbers exist
+- Dashboard banner: Mobile Operations v1.5 ACTIVE
+
+Rollback:
+Restore the backed-up files. No schema/database rollback is necessary.
