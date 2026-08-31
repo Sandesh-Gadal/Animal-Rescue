@@ -387,13 +387,14 @@ function initReportSteps() {
 }
 
 function initPhotoPreview() {
-  const input = document.getElementById('report-photos');
+  const inputs = ['report-photos-camera','report-photos-gallery','report-photos']
+    .map(id => document.getElementById(id)).filter(Boolean);
   const grid = document.getElementById('photo-preview-grid');
   const status = document.getElementById('photo-preview-status');
-  if (!input || !grid) return;
-  input.addEventListener('change', () => {
+  if (!inputs.length || !grid) return;
+  const render = () => {
     grid.innerHTML = '';
-    const files = [...input.files].filter(f => f.type.startsWith('image/'));
+    const files = inputs.flatMap(inp => [...inp.files]).filter(f => f.type.startsWith('image/'));
     files.forEach(file => {
       const wrap = document.createElement('div'); wrap.className = 'photo-preview';
       const img = document.createElement('img'); img.alt = 'Selected photo preview';
@@ -402,7 +403,8 @@ function initPhotoPreview() {
       wrap.append(img,label); grid.appendChild(wrap);
     });
     if (status) status.textContent = files.length ? `${files.length} photo${files.length===1?'':'s'} selected.` : 'No photos selected.';
-  });
+  };
+  inputs.forEach(inp => inp.addEventListener('change', render));
 }
 
 function initFormAccessibility() {

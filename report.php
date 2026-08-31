@@ -179,7 +179,18 @@ require __DIR__.'/includes/public_header.php';
 
 <section id="step-photos" class="report-step" aria-labelledby="step-photos-title">
 <h2 id="step-photos-title" class="report-section-title"><span class="step-number" aria-hidden="true">3</span> Photos / फोटो</h2>
-<div class="form-group"><label for="report-photos">Take or upload photos</label><input class="input" id="report-photos" type="file" name="photos[]" accept="image/jpeg,image/png,image/webp" capture="environment" multiple aria-describedby="photo-help photo-preview-status"><div id="photo-help" class="small muted">On a phone, this opens the rear camera when supported. JPG/PNG/WEBP. Human-body photos are restricted to authorized staff.</div><div id="photo-preview-status" class="small muted" role="status" aria-live="polite">No photos selected.</div><div id="photo-preview-grid" class="photo-preview-grid" aria-hidden="true"></div></div>
+<div class="form-group">
+  <label id="report-photos-label">Photos / फोटो</label>
+  <div class="photo-source-actions">
+    <label class="btn" for="report-photos-camera">📷 Take Photo / फोटो खिच्नुहोस्</label>
+    <input class="sr-only" id="report-photos-camera" type="file" name="photos[]" accept="image/jpeg,image/png,image/webp" capture="environment" multiple aria-describedby="photo-help photo-preview-status">
+    <label class="btn" for="report-photos-gallery">🖼️ Choose from Gallery / ग्यालेरीबाट छान्नुहोस्</label>
+    <input class="sr-only" id="report-photos-gallery" type="file" name="photos[]" accept="image/jpeg,image/png,image/webp" multiple aria-describedby="photo-help photo-preview-status">
+  </div>
+  <div id="photo-help" class="small muted">JPG/PNG/WEBP. Human-body photos are restricted to authorized staff.</div>
+  <div id="photo-preview-status" class="small muted" role="status" aria-live="polite">No photos selected.</div>
+  <div id="photo-preview-grid" class="photo-preview-grid" aria-hidden="true"></div>
+</div>
 </section>
 
 <section id="step-contact" class="report-step" aria-labelledby="step-contact-title">
