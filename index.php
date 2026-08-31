@@ -13,9 +13,7 @@ require __DIR__.'/includes/public_header.php';
 <div class="badge">Public safety dashboard</div>
 <h1>Livestock Carcass Management / पशु चौपाया शव व्यवस्थापन</h1>
 <p>Current case counts across all human and animal reports.</p>
-<?php if (is_admin_logged_in() && can_edit()): ?>
 <div style="margin-top:14px"><a class="btn btn-primary" href="<?=app_base($config)?>/report">Report the Case / घटना पठाउनुहोस्</a></div>
-<?php endif; ?>
 </div></section>
 <section class="section"><div class="container grid grid-3">
 <div class="card"><div class="muted">Pending</div><div class="stats"><?=number_format((int)$stats['pending'])?></div></div>

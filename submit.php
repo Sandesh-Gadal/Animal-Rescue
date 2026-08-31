@@ -1,6 +1,5 @@
 <?php
 require __DIR__.'/includes/bootstrap.php';
-require_operator();
 if ($_SERVER['REQUEST_METHOD']!=='POST') { header('Location: report'); exit; }
 csrf_check();
 
@@ -83,7 +82,7 @@ try {
       mb_substr(trim((string)($_POST['alternate_phone'] ?? '')),0,30),
       mb_substr(trim((string)($_POST['reporter_organization'] ?? '')),0,160),
       isset($_POST['reporter_private'])?1:0,
-      admin_user()['id'],
+      admin_user()['id'] ?? null,
       $policeInformed?1:0,
       $policeInformed?date('Y-m-d H:i:s'):null,
       $policeInformed?'reporter':'unknown',

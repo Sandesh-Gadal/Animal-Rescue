@@ -4,9 +4,7 @@
 
 <nav class="mobile-bottom-nav" aria-label="Mobile navigation">
   <a href="<?=app_base($config)?>/" data-path="<?=app_base($config)?>"><span aria-hidden="true">⌂</span><span>Home</span></a>
-  <?php if (is_admin_logged_in() && can_edit()): ?>
   <a href="<?=app_base($config)?>/report" data-path="<?=app_base($config)?>/report"><span aria-hidden="true">＋</span><span>Report</span></a>
-  <?php endif; ?>
   <?php if (is_admin_logged_in()): ?>
   <a href="<?=app_base($config)?>/admin" data-path="<?=app_base($config)?>/admin"><span aria-hidden="true">⚙</span><span>Dashboard</span></a>
   <?php else: ?>

@@ -22,14 +22,14 @@ Server deployment steps for the Dead Body Mapping System. This is a plain PHP ap
 4. **Run the installer**: visit `/setup.php?key=YOUR_SETUP_KEY` (the key from `config.php` → `security.setup_key`). This creates the full database schema (all tables, at the current schema version) and lets you create the first Admin account in one step. It refuses to run if an admin already exists or the setup key is wrong/still the placeholder, and it's safe to reload if something fails partway (e.g. a DB privilege issue) — just fix the issue and try again.
 5. **Set `uploads/` permissions** so the web server user can write to it (typically `755` on the directory is enough if the web server owns it; use `775`/appropriate group ownership if it doesn't). Confirm `uploads/.htaccess` (blocks PHP execution inside uploads) made it onto the server — it's a real security control, not optional.
 6. **Delete `setup.php`** (and the `/setup/` folder, a legacy single-purpose admin-creation tool now superseded by `setup.php`) from the server immediately after the admin account is created. They have no further purpose, and leaving them live is a needless attack surface.
-7. **Create at least one Operator account** via `/admin/users.php` (logged in as the admin you just created) — reports can only be filed by logged-in Admin/Operator accounts; there is no public self-registration.
+7. **Create at least one Operator account** via `/admin/users.php` (logged in as the admin you just created) — this is for staff who need dashboard/case-management access. The public report form itself (`/report`) does not require login; anyone can file a report.
 8. **Verify HTTPS is enforced** (redirect HTTP → HTTPS at the server/vhost level; the app does not do this itself).
 
 ## 3. Post-deploy verification checklist
 
 - [ ] Homepage (`/`) loads and shows the public stats + map with no PHP errors
 - [ ] `/admin/login.php` loads and you can log in with the admin account from step 6
-- [ ] Logged in as Admin/Operator, `/report` loads and a test report can be filed end-to-end (submit → success page → case shows up on `/admin`)
+- [ ] `/report` loads without logging in, and a test report can be filed end-to-end (submit → success page → case shows up on `/admin`)
 - [ ] `/case/<public_id>` (the tracking page) resolves correctly for a filed report
 - [ ] `/admin/export/csv` downloads a CSV — confirms the pretty-URL rewrite rules are active (if this 404s, `AllowOverride`/`mod_rewrite` isn't working)
 - [ ] Directly requesting `/config.php`, `/database.sql`, or `/includes/functions.php` in a browser returns a 403/404, not file contents

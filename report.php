@@ -1,14 +1,16 @@
 <?php
 require __DIR__.'/includes/bootstrap.php';
-require_operator();
 $title='Report a Body';
 $useLeaflet=true;
 $hideTopbar=true;
 $base=app_base($config);
 $police=(string)($config['emergency']['police_control']??'100');
-$s=$db->prepare('SELECT name,phone,office_name FROM admin_users WHERE id=?');
-$s->execute([admin_user()['id']]);
-$reporter=$s->fetch() ?: [];
+$reporter=[];
+if (is_admin_logged_in()) {
+    $s=$db->prepare('SELECT name,phone,office_name FROM admin_users WHERE id=?');
+    $s->execute([admin_user()['id']]);
+    $reporter=$s->fetch() ?: [];
+}
 require __DIR__.'/includes/public_header.php';
 ?>
 <section class="section"><div class="container" style="max-width:860px">
