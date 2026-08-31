@@ -3,6 +3,7 @@
 <nav class="mobile-bottom-nav no-print" aria-label="Admin mobile navigation">
   <a href="<?=app_base($config)?>/" data-path="<?=app_base($config)?>"><span aria-hidden="true">⌂</span><span>Home</span></a>
   <a href="<?=app_base($config)?>/admin" data-path="<?=app_base($config)?>/admin"><span aria-hidden="true">▦</span><span>Dashboard</span></a>
+  <a href="<?=app_base($config)?>/admin/analytics.php" data-path="<?=app_base($config)?>/admin/analytics.php"><span aria-hidden="true">📊</span><span>Analytics</span></a>
   <?php if(can_edit()):?><a href="<?=app_base($config)?>/report" data-path="<?=app_base($config)?>/report"><span aria-hidden="true">＋</span><span>Report</span></a><?php endif;?>
   <a href="<?=app_base($config)?>/admin/logout"><span aria-hidden="true">↪</span><span>Logout</span></a>
 </nav>
