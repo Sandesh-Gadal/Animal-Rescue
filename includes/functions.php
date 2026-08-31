@@ -207,8 +207,10 @@ function upload_photos(PDO $db, int $reportId, array $config): void {
     $finfo=new finfo(FILEINFO_MIME_TYPE);
     $allowed=['image/jpeg'=>'jpg','image/png'=>'png','image/webp'=>'webp'];
     for ($i=0;$i<$count;$i++) {
-        if ($_FILES['photos']['error'][$i]===UPLOAD_ERR_NO_FILE) continue;
-        if ($_FILES['photos']['error'][$i]!==UPLOAD_ERR_OK) throw new RuntimeException('Photo upload failed.');
+        $err=$_FILES['photos']['error'][$i];
+        if ($err===UPLOAD_ERR_NO_FILE) continue;
+        if ($err===UPLOAD_ERR_INI_SIZE || $err===UPLOAD_ERR_FORM_SIZE) throw new RuntimeException('One of your photos is too large. Please use a smaller photo (max '.(int)($config['security']['max_upload_mb'] ?? 8).'MB each) and try again.');
+        if ($err!==UPLOAD_ERR_OK) throw new RuntimeException('Photo upload failed.');
         $tmp=$_FILES['photos']['tmp_name'][$i];
         $size=(int)$_FILES['photos']['size'][$i];
         if ($size<1 || $size>$maxBytes) throw new RuntimeException('Each photo must be within the configured size limit.');

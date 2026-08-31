@@ -158,24 +158,28 @@ require __DIR__.'/includes/public_header.php';
 
   <div class="form-group">
     <label>Equipment needed / आवश्यक पर्ने उपकरणहरू</label>
+    <div class="check-grid">
     <?php foreach(equipment_needed_labels() as $k=>$v): ?>
-      <label class="privacy"><input type="checkbox" name="equipment_needed[]" value="<?=$k?>"><span><?=e($v)?></span></label>
+      <label class="check-item"><input type="checkbox" name="equipment_needed[]" value="<?=$k?>"><span><?=e($v)?></span></label>
     <?php endforeach; ?>
+    </div>
     <input class="input" name="equipment_needed_other" maxlength="120" placeholder="Other equipment / अन्य उपकरण" style="margin-top:8px">
   </div>
 
   <div class="form-group">
     <label>Disinfection materials needed / निशंक्रमण सामग्री</label>
+    <div class="check-grid">
     <?php foreach(disinfection_materials_labels() as $k=>$v): ?>
-      <label class="privacy"><input type="checkbox" name="disinfection_materials[]" value="<?=$k?>"><span><?=e($v)?></span></label>
+      <label class="check-item"><input type="checkbox" name="disinfection_materials[]" value="<?=$k?>"><span><?=e($v)?></span></label>
     <?php endforeach; ?>
+    </div>
   </div>
 </div>
 </section>
 
 <section id="step-photos" class="report-step" aria-labelledby="step-photos-title">
 <h2 id="step-photos-title" class="report-section-title"><span class="step-number" aria-hidden="true">3</span> Photos / फोटो</h2>
-<div class="form-group"><label for="report-photos">Take or upload up to <?=e((string)$config['security']['max_photos'])?> photos</label><input class="input" id="report-photos" type="file" name="photos[]" accept="image/jpeg,image/png,image/webp" capture="environment" multiple aria-describedby="photo-help photo-preview-status"><div id="photo-help" class="small muted">On a phone, this opens the rear camera when supported. JPG/PNG/WEBP. Human-body photos are restricted to authorized staff.</div><div id="photo-preview-status" class="small muted" role="status" aria-live="polite">No photos selected.</div><div id="photo-preview-grid" class="photo-preview-grid" aria-hidden="true"></div></div>
+<div class="form-group"><label for="report-photos">Take or upload photos</label><input class="input" id="report-photos" type="file" name="photos[]" accept="image/jpeg,image/png,image/webp" capture="environment" multiple aria-describedby="photo-help photo-preview-status"><div id="photo-help" class="small muted">On a phone, this opens the rear camera when supported. JPG/PNG/WEBP. Human-body photos are restricted to authorized staff.</div><div id="photo-preview-status" class="small muted" role="status" aria-live="polite">No photos selected.</div><div id="photo-preview-grid" class="photo-preview-grid" aria-hidden="true"></div></div>
 </section>
 
 <section id="step-contact" class="report-step" aria-labelledby="step-contact-title">

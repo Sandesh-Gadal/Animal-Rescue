@@ -19,7 +19,7 @@ return [
     ],
     'security' => [
         'session_name' => 'DBMAPSESSID',
-        'max_upload_mb' => 8,
+        'max_upload_mb' => 100,
         'max_photos' => 5,
         'public_coordinate_decimals' => 3,
         'setup_key' => 'CHANGE_THIS_TO_A_LONG_RANDOM_SECRET',

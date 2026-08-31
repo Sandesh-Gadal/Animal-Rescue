@@ -45,7 +45,13 @@ input[type="checkbox"],input[type="radio"]{width:24px;height:24px;min-width:24px
 .table-wrap{overflow:auto;-webkit-overflow-scrolling:touch}.table{width:100%;border-collapse:collapse}.table th,.table td{text-align:left;padding:11px 10px;border-bottom:1px solid #e5e7eb;white-space:nowrap}.table th{font-size:13px;color:var(--muted)}
 .map{height:520px;border-radius:16px;overflow:hidden;border:1px solid var(--border)}.photo-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px}.photo-grid img{width:100%;height:160px;object-fit:cover;border-radius:12px;background:#e5e7eb}
 .pagination{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:16px}.pagination-status{color:var(--muted);font-size:13px;text-align:center}.pagination .btn.disabled{opacity:.45;pointer-events:none}
-.footer{padding:40px 0;color:var(--muted)}.section{padding:24px 0}.case-id{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-weight:800;overflow-wrap:anywhere}.privacy{display:flex;align-items:flex-start;gap:10px;padding:6px 0}.privacy span{padding-top:1px}.hide-human img{filter:blur(18px)}
+.footer{padding:40px 0;color:var(--muted)}.section{padding:24px 0}.case-id{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-weight:800;overflow-wrap:anywhere}label.privacy{display:flex;align-items:flex-start;gap:10px;padding:6px 0}.privacy input{flex:0 0 18px;width:18px;height:18px;margin:2px 0 0;accent-color:var(--navy)}.privacy span{padding-top:1px;font-weight:500}
+.check-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:9px;margin-top:8px}
+label.check-item{display:flex;align-items:center;gap:10px;padding:11px 13px;border:1.5px solid var(--border);border-radius:12px;background:var(--surface);cursor:pointer;min-height:var(--tap);font-weight:500;transition:border-color .15s,background .15s}
+.check-item input{flex:0 0 18px;width:18px;height:18px;margin:0;accent-color:var(--navy)}
+.check-item span{flex:1;line-height:1.25}
+.check-item:hover{border-color:#b7c3d6}
+.check-item:has(input:checked){border-color:var(--navy);background:#eef2f7}.hide-human img{filter:blur(18px)}
 
 /* location reporting */
 .location-card{border:1px solid #cbd5e1;border-radius:14px;padding:14px;background:var(--surface-soft)}.location-actions{display:flex;gap:10px;flex-wrap:wrap}.gps-status{display:flex;align-items:center;gap:9px;margin-top:12px;padding:11px 12px;border-radius:11px;font-weight:650}.gps-dot{width:10px;height:10px;border-radius:50%;background:currentColor;flex:0 0 auto}.gps-waiting{background:#fff7ed;color:#9a3412}.gps-success{background:#ecfdf3;color:#166534}.gps-error{background:#fff1f0;color:#b42318}.gps-manual{background:#eff6ff;color:#1d4ed8}.permission-help{margin-top:12px}.report-location-map{height:340px}.leaflet-container{font:inherit}

@@ -2,13 +2,25 @@ Options -Indexes
 RewriteEngine On
 
 # Protect internal/config files
-<FilesMatch "^(config\.php|config\.example\.php|database\.sql|README\.md|\.env)$">
+<FilesMatch "^(config\.php|config\.example\.php|database\.sql|README\.md|\.env|\.user\.ini)$">
     Require all denied
 </FilesMatch>
 
 # Block direct access to internal files
 RewriteRule ^includes/ - [F,L]
 RewriteRule ^migrations/ - [F,L]
+
+# Raise upload limits so real phone-camera photos (commonly 3-8MB) don't get
+# silently dropped by PHP before the app's own code runs. Only takes effect
+# under mod_php -- .user.ini (same directory) covers PHP-FPM/CGI hosts, the
+# more common setup on shared/cPanel hosting.
+<IfModule mod_php.c>
+    php_value upload_max_filesize 110M
+    php_value post_max_size 520M
+    php_value max_file_uploads 20
+    php_value max_execution_time 300
+    php_value memory_limit 512M
+</IfModule>
 
 # Friendly public routes
 RewriteRule ^report/?$ report.php [L,QSA]

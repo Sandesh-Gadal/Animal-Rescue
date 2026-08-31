@@ -1,6 +1,11 @@
 <?php
 require __DIR__.'/includes/bootstrap.php';
 if ($_SERVER['REQUEST_METHOD']!=='POST') { header('Location: report'); exit; }
+if (empty($_POST) && empty($_FILES) && (int)($_SERVER['CONTENT_LENGTH'] ?? 0) > 0) {
+    http_response_code(413);
+    $maxMb=(int)($config['security']['max_upload_mb'] ?? 8);
+    exit('Your photos were too large to upload together. Please try again with fewer photos, or photos under '.$maxMb.'MB each.');
+}
 csrf_check();
 
 $recent=$db->prepare("SELECT COUNT(*) FROM body_reports WHERE client_ip_hash=? AND created_at >= (NOW() - INTERVAL 10 MINUTE)");
@@ -113,6 +118,10 @@ try {
     $h->execute([$reportId,$note]);
     $db->commit();
     header('Location: success/'.rawurlencode($publicId));
+} catch(RuntimeException $e) {
+    if ($db->inTransaction()) $db->rollBack();
+    http_response_code(422);
+    exit($e->getMessage());
 } catch(Throwable $e) {
     if ($db->inTransaction()) $db->rollBack();
     http_response_code(500);

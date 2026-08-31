@@ -27,7 +27,7 @@ $base=app_base($config);
     <nav class="nav<?=!empty($simpleNav) ? ' nav-simple' : ''?>" id="public-nav" aria-label="Main navigation">
       <?php if (empty($simpleNav)): ?><button class="public-menu-close" type="button" aria-label="Close menu" onclick="togglePublicMenu(false)">×</button><?php endif; ?>
       <a class="<?=!empty($simpleNav) ? 'btn' : ''?>" href="<?=$base?>/">Home / गृहपृष्ठ</a>
-      <a class="<?=!empty($simpleNav) ? 'btn' : ''?>" href="<?=$base?>/report">Report / सूचना</a>
+      <!-- <a class="<?=!empty($simpleNav) ? 'btn' : ''?>" href="<?=$base?>/report">Report / सूचना</a> -->
       <?php if (is_admin_logged_in()): ?>
       <a class="<?=!empty($simpleNav) ? 'btn btn-primary' : ''?>" href="<?=$base?>/admin">Dashboard</a>
       <?php else: ?>
